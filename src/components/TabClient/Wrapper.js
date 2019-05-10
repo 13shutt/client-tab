@@ -13,6 +13,9 @@ export const Wrapper = styled.div`
         font-weight: 600;
         font-size: 18px;
       }
+      p {
+        text-align: justify;
+      }
     `
   }
 
