@@ -10,7 +10,7 @@ class TabClient extends Component {
     console.log(this.props)  
   }
 
-  changeText = evt => {
+  changeText = () => {
     console.log('text edited')
   };
 
@@ -19,8 +19,8 @@ class TabClient extends Component {
       <Wrapper main>
 
         <User>
-          <img src={user} alt="logo"/>
-          <span>Виталий Давиденко</span>
+          <img onClick={() => this.props.actions.editItem()} src={user} alt="logo"/>
+          <span onClick={() => this.props.actions.deleteItem()}>Виталий Давиденко</span>
         </User>
 
         <h3>Канал связи:</h3>
