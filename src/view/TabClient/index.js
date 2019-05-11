@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import TabClient from './TabClient'
-import { deleteItem, editItem } from 'store/TabClient/actions'
+import { deleteItem, editItem, addItem } from 'store/TabClient/actions'
 
 const mapStateToProps = state => ({
   contacts: [
@@ -22,7 +22,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
     deleteItem,
-    editItem
+    editItem, 
+    addItem
   }, dispatch)
 })
 

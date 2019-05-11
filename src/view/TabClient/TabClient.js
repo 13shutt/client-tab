@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import ContentEditable from 'react-contenteditable'
 
 import user from 'assets/user.jpg'
-import { Wrapper, User, Channel, Contact } from 'components/TabClient'
+import { Wrapper, User, Channel } from 'components/TabClient'
+import Contact from 'view/Contact'
 
 class TabClient extends Component {
-
+ 
   componentDidMount() {
     console.log(this.props)  
   }
@@ -19,8 +20,8 @@ class TabClient extends Component {
       <Wrapper main>
 
         <User>
-          <img onClick={() => this.props.actions.editItem()} src={user} alt="logo"/>
-          <span onClick={() => this.props.actions.deleteItem()}>Виталий Давиденко</span>
+          <img src={user} alt="logo"/>
+          <span>Виталий Давиденко</span>
         </User>
 
         <h3>Канал связи:</h3>
@@ -30,7 +31,11 @@ class TabClient extends Component {
         </Wrapper>
 
         <h3>Контакти: </h3>
-        {this.props.contacts.map(item => <Contact item={item} />)}
+        {this.props.contacts.map(item => <Contact
+                                            delete={this.props.actions.deleteItem}
+                                            edit={this.props.actions.editItem} 
+                                            item={item}
+                                          />)}
 
         <h3>Примечание:</h3>
         <ContentEditable
