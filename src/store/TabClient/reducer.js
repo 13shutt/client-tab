@@ -33,17 +33,28 @@ function tabClientReducer(state = initialState, action) {
       }
 
     case EDIT_ITEM:
-    console.log("edit item")
-    return state
+    console.log(action.payload)
+    let element
+      state.contacts.forEach((item, index) => (item.type === action.payload.type && item.id === action.payload.id && item.data === action.payload.data) 
+      ? element = index : null)
+      return {
+        contacts: [
+          ...state.contacts.slice(0, element),
+          action.payload,
+          ...state.contacts.slice(element + 1, state.contacts.length)
+        ],
+        about: state.about 
+      }
 
     case ADD_ITEM:
       let ind
-      state.contacts.forEach((item, index) => item.type === action.payload.type ? ind = index : null)
+      state.contacts.forEach((item, index) => (item.type === action.payload.type && item.id === action.payload.id && item.data === action.payload.data) 
+      ? ind = index : null)
       return {
         contacts: [
           ...state.contacts.slice(0, ind + 1),
           action.payload,
-          ...state.contacts.slice(ind + 1, state.contacts.length)
+          ...state.contacts.slice(ind, state.contacts.length)
         ],
         about: state.about 
       }

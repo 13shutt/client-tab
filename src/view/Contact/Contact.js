@@ -11,11 +11,13 @@ class Contact extends Component {
   
       this.state = { 
         isDropdownOpen: false,
-        isInputOpen: false
+        isInputOpen: false,
+        isEditableClose: true
       };
       this.toggleContainer = React.createRef();
       this.dropdown = React.createRef()
       this.input = React.createRef()
+      this.editInputRef = React.createRef()
   
       this.onClickHandler = this.onClickHandler.bind(this);
       this.onClickOutsideHandler = this.onClickOutsideHandler.bind(this);
@@ -44,6 +46,10 @@ class Contact extends Component {
         this.props.actions.addItem(this.props.item.id, this.props.item.type, this.input.current.value)
         this.setState({ isInputOpen: false });
       }
+      if (!this.state.isEditableClose && this.editInputRef.current !== event.target) {
+        this.props.actions.editItem(this.props.item.id, this.props.item.type, this.editInputRef.current.value)
+        this.setState({isEditableClose: true})
+      }
     }
 
     handleInputChange(val) {
@@ -60,6 +66,11 @@ class Contact extends Component {
       navigator.clipboard.writeText(this.props.item.data)
       this.onClickHandler()
     }
+
+    showEditInput = () => {
+      this.setState({isEditableClose: false})
+      this.onClickHandler()
+    }
   
     render() {
       return (
@@ -68,7 +79,7 @@ class Contact extends Component {
             <div className="type">{this.props.item.type}:</div>
             <div ref={this.toggleContainer}>
               {
-                true
+                this.state.isEditableClose
                   ? <>
                       <img src={plus} onClick={this.onClickPlus}/>
                       <span onClick={this.onClickHandler}>{this.props.item.data}</span>
@@ -76,6 +87,7 @@ class Contact extends Component {
                   : <Input 
                       handleChange={()=>{this.handleInputChange(this.state.data)}}  
                       value={this.props.item.data}
+                      ref={this.editInputRef}
                     />
               }
               {this.state.isDropdownOpen 
@@ -86,6 +98,7 @@ class Contact extends Component {
                     id={this.props.item.id} 
                     type={this.props.item.type}
                     data={this.props.item.data}
+                    edit={this.showEditInput}
                   /> 
                 : null}
             </div>
