@@ -1,7 +1,8 @@
 import { DELETE_ITEM, EDIT_ITEM, ADD_ITEM } from './constants'
 
-const deleteItem = () => dispatch => {
-  dispatch({type: DELETE_ITEM})
+const deleteItem = (id, type, value) => dispatch => {
+  const data = {id: id, type: type, data: value}
+  dispatch({type: DELETE_ITEM, payload: data})
 }
 
 const editItem = () => dispatch => {

@@ -78,7 +78,16 @@ class Contact extends Component {
                       value={this.props.item.data}
                     />
               }
-              {this.state.isDropdownOpen ? <Dropdown copy={this.copy} ref={this.dropdown} /> : null}
+              {this.state.isDropdownOpen 
+                ? <Dropdown 
+                    copy={this.copy} 
+                    ref={this.dropdown}
+                    delete={this.props.actions.deleteItem}
+                    id={this.props.item.id} 
+                    type={this.props.item.type}
+                    data={this.props.item.data}
+                  /> 
+                : null}
             </div>
           </div>
           {
