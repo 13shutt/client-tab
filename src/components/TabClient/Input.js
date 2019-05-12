@@ -19,11 +19,12 @@ const StyledDiv =  styled.div`
   }
 `
 
-export const Input = () => (
+export const Input = (props) => (
   <StyledDiv>
     <input 
       autoFocus 
       type="text"
+      value={props.value}
     />
   </StyledDiv>
 )

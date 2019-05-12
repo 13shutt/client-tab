@@ -11,6 +11,7 @@ class Contact extends Component {
   
       this.state = { isOpen: false };
       this.toggleContainer = React.createRef();
+      this.dropdown = React.createRef()
   
       this.onClickHandler = this.onClickHandler.bind(this);
       this.onClickOutsideHandler = this.onClickOutsideHandler.bind(this);
@@ -31,10 +32,12 @@ class Contact extends Component {
     }
   
     onClickOutsideHandler(event) {
-      if (this.state.isOpen && !this.toggleContainer.current.contains(event.target)) {
+      if ((this.state.isOpen && !this.toggleContainer.current.contains(event.target)) || (this.dropdown.current !== null && this.dropdown.current.contains(event.target))) {
         this.setState({ isOpen: false });
       }
     }
+
+    copy = () => navigator.clipboard.writeText(this.props.item.data)
   
     render() {
       return (
@@ -47,9 +50,9 @@ class Contact extends Component {
                     <img src={plus}/>
                     <span onClick={this.onClickHandler}>{this.props.item.data}</span>
                   </>
-                : <Input />
+                : <Input value={this.props.item.data} />
             }
-            {this.state.isOpen ? <Dropdown /> : null}
+            {this.state.isOpen ? <Dropdown copy={this.copy} ref={this.dropdown} /> : null}
           </div>
         </div>
       );
