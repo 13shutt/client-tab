@@ -8,8 +8,9 @@ const editItem = () => dispatch => {
   dispatch({type: EDIT_ITEM})
 }
 
-const addItem = () => dispatch => {
-  dispatch({type: ADD_ITEM})
+const addItem = (id, type, value) => dispatch => {
+  const data = {id: id, type: type, data: value}
+  dispatch({type: ADD_ITEM, payload: data})
 }
 
 export { deleteItem, editItem, addItem }

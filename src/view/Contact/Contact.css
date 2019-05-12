@@ -2,9 +2,13 @@
   display: flex;
   flex-direction: row;
   align-items: baseline;
+  height: 24px;
 }
 .contact .type {
   width: 80px;
+}
+input {
+  height: 22px;
 }
 .contact img {
   height: 17px;

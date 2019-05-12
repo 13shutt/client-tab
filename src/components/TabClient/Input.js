@@ -19,12 +19,14 @@ const StyledDiv =  styled.div`
   }
 `
 
-export const Input = (props) => (
+export const Input = React.forwardRef((props, ref) => (
   <StyledDiv>
     <input 
       autoFocus 
+      onChange={props.handleChange}
       type="text"
-      value={props.value}
+      defaultValue={props.value}
+      ref={ref}
     />
   </StyledDiv>
-)
+))

@@ -9,52 +9,87 @@ class Contact extends Component {
   constructor(props) {
       super(props);
   
-      this.state = { isOpen: false };
+      this.state = { 
+        isDropdownOpen: false,
+        isInputOpen: false
+      };
       this.toggleContainer = React.createRef();
       this.dropdown = React.createRef()
+      this.input = React.createRef()
   
       this.onClickHandler = this.onClickHandler.bind(this);
       this.onClickOutsideHandler = this.onClickOutsideHandler.bind(this);
     }
   
     componentDidMount() {
-      window.addEventListener('click', this.onClickOutsideHandler);
+      window.addEventListener('mousedown', this.onClickOutsideHandler);
     }
   
     componentWillUnmount() {
-      window.removeEventListener('click', this.onClickOutsideHandler);
+      window.removeEventListener('mousedown', this.onClickOutsideHandler);
     }
   
     onClickHandler() {
       this.setState(currentState => ({
-        isOpen: !currentState.isOpen
+        isDropdownOpen: !currentState.isDropdownOpen
       }));
     }
   
     onClickOutsideHandler(event) {
-      if ((this.state.isOpen && !this.toggleContainer.current.contains(event.target)) || (this.dropdown.current !== null && this.dropdown.current.contains(event.target))) {
-        this.setState({ isOpen: false });
+      if ((this.state.isDropdownOpen && !this.toggleContainer.current.contains(event.target))) {
+        this.setState({ isDropdownOpen: false });
+      }
+      // multiple pluses
+      if ((this.state.isInputOpen && event.target.tagName !== 'IMG' && this.input.current !== event.target)) {
+        this.props.actions.addItem(this.props.item.id, this.props.item.type, this.input.current.value)
+        this.setState({ isInputOpen: false });
       }
     }
 
-    copy = () => navigator.clipboard.writeText(this.props.item.data)
+    handleInputChange(val) {
+        return val;
+    }
+
+    onClickPlus = () => {
+      this.setState(currentState => ({
+        isInputOpen: !currentState.isInputOpen
+      }));
+    }
+
+    copy = () => {
+      navigator.clipboard.writeText(this.props.item.data)
+      this.onClickHandler()
+    }
   
     render() {
       return (
-        <div className="contact" key={this.props.item.id}>
-          <div className="type">{this.props.item.type}:</div>
-          <div ref={this.toggleContainer}>
-            {
-              true
-                ? <>
-                    <img src={plus}/>
-                    <span onClick={this.onClickHandler}>{this.props.item.data}</span>
-                  </>
-                : <Input value={this.props.item.data} />
-            }
-            {this.state.isOpen ? <Dropdown copy={this.copy} ref={this.dropdown} /> : null}
+        <>
+          <div className="contact" key={this.props.item.id}>
+            <div className="type">{this.props.item.type}:</div>
+            <div ref={this.toggleContainer}>
+              {
+                true
+                  ? <>
+                      <img src={plus} onClick={this.onClickPlus}/>
+                      <span onClick={this.onClickHandler}>{this.props.item.data}</span>
+                    </>
+                  : <Input 
+                      handleChange={()=>{this.handleInputChange(this.state.data)}}  
+                      value={this.props.item.data}
+                    />
+              }
+              {this.state.isDropdownOpen ? <Dropdown copy={this.copy} ref={this.dropdown} /> : null}
+            </div>
           </div>
-        </div>
+          {
+            this.state.isInputOpen
+            ? <div className="contact">
+                <div className="type">{this.props.item.type}:</div>
+                <Input ref={this.input} />
+              </div>
+            : null
+          }
+        </>
       );
     }
   }
