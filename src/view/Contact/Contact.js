@@ -43,11 +43,11 @@ class Contact extends Component {
       }
       // multiple pluses
       if ((this.state.isInputOpen && event.target.tagName !== 'IMG' && this.input.current !== event.target)) {
-        this.props.actions.addItem(this.props.item.id, this.props.item.type, this.input.current.value)
+        this.props.actions.addItem(this.props.item.id, this.props.item.type, this.props.item.data, this.input.current.value)
         this.setState({ isInputOpen: false });
       }
       if (!this.state.isEditableClose && this.editInputRef.current !== event.target) {
-        this.props.actions.editItem(this.props.item.id, this.props.item.type, this.editInputRef.current.value)
+        this.props.actions.editItem(this.props.item.id, this.props.item.type, this.props.item.data, this.editInputRef.current.value)
         this.setState({isEditableClose: true})
       }
     }

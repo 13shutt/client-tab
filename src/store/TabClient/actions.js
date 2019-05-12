@@ -5,14 +5,16 @@ const deleteItem = (id, type, value) => dispatch => {
   dispatch({type: DELETE_ITEM, payload: data})
 }
 
-const editItem = (id, type, value) => dispatch => {
+const editItem = (id, type, value, edit) => dispatch => {
   const data = {id: id, type: type, data: value}
-  dispatch({type: EDIT_ITEM, payload: data})
+  const edited = {id: id, type: type, data: edit}
+  dispatch({type: EDIT_ITEM, payload: [data, edited]})
 }
 
-const addItem = (id, type, value) => dispatch => {
+const addItem = (id, type, value, newData) => dispatch => {
   const data = {id: id, type: type, data: value}
-  dispatch({type: ADD_ITEM, payload: data})
+  const newAdded = {id: id, type: type, data: newData}
+  dispatch({type: ADD_ITEM, payload: [data, newAdded]})
 }
 
 export { deleteItem, editItem, addItem }
