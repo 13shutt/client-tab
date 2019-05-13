@@ -19,7 +19,6 @@ function tabClientReducer(state = initialState, action) {
   switch(action.type) {
     
     case DELETE_ITEM:
-      console.log("delete item", action.payload)
       let delEL
       state.contacts.forEach((item, index) => 
       (item.type === action.payload.type && item.id === action.payload.id && item.data === action.payload.data) 
@@ -33,7 +32,6 @@ function tabClientReducer(state = initialState, action) {
       }
 
     case EDIT_ITEM:
-    console.log(action.payload)
     let element
       state.contacts.forEach((item, index) => (item.type === action.payload[0].type && item.id === action.payload[0].id && item.data === action.payload[0].data) 
       ? element = index : null)

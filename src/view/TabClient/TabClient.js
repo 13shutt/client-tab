@@ -6,16 +6,13 @@ import { Wrapper, User, Channel } from 'components/TabClient'
 import Contact from 'view/Contact'
 
 class TabClient extends Component {
- 
-  componentDidMount() {
-    console.log(this.props)  
-  }
 
   changeText = () => {
     console.log('text edited')
   };
 
   render() { 
+    const { actions, contacts, about } = this.props
     return (
       <Wrapper main>
 
@@ -31,16 +28,18 @@ class TabClient extends Component {
         </Wrapper>
 
         <h3>Контакти: </h3>
-        {this.props.contacts.map(item => <Contact
-                                            delete={this.props.actions.deleteItem}
-                                            edit={this.props.actions.editItem} 
-                                            item={item}
-                                          />)}
+        {contacts.map(item => 
+          <Contact
+            delete={actions.deleteItem}
+            edit={actions.editItem} 
+            item={item}
+          />
+        )}
 
         <h3>Примечание:</h3>
         <ContentEditable
           innerRef={this.contentEditable}
-          html={this.props.about} 
+          html={about} 
           disabled={false}      
           onChange={this.changeText} 
           tagName='p' 

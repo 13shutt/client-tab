@@ -7,113 +7,108 @@ import './Contact.css'
 
 class Contact extends Component {
   constructor(props) {
-      super(props);
-  
-      this.state = { 
-        isDropdownOpen: false,
-        isInputOpen: false,
-        isEditableClose: true
-      };
-      this.toggleContainer = React.createRef();
-      this.dropdown = React.createRef()
-      this.input = React.createRef()
-      this.editInputRef = React.createRef()
-  
-      this.onClickHandler = this.onClickHandler.bind(this);
-      this.onClickOutsideHandler = this.onClickOutsideHandler.bind(this);
-    }
-  
-    componentDidMount() {
-      window.addEventListener('mousedown', this.onClickOutsideHandler);
-    }
-  
-    componentWillUnmount() {
-      window.removeEventListener('mousedown', this.onClickOutsideHandler);
-    }
-  
-    onClickHandler() {
-      this.setState(currentState => ({
-        isDropdownOpen: !currentState.isDropdownOpen
-      }));
-    }
-  
-    onClickOutsideHandler(event) {
-      if ((this.state.isDropdownOpen && !this.toggleContainer.current.contains(event.target))) {
-        this.setState({ isDropdownOpen: false });
-      }
-      // multiple pluses
-      if ((this.state.isInputOpen && event.target.tagName !== 'IMG' && this.input.current !== event.target)) {
-        this.props.actions.addItem(this.props.item.id, this.props.item.type, this.props.item.data, this.input.current.value)
-        this.setState({ isInputOpen: false });
-      }
-      if (!this.state.isEditableClose && this.editInputRef.current !== event.target) {
-        this.props.actions.editItem(this.props.item.id, this.props.item.type, this.props.item.data, this.editInputRef.current.value)
-        this.setState({isEditableClose: true})
-      }
+    super(props);
+
+    this.state = { 
+      isDropdownOpen: false,
+      isInputOpen: false,
+      isEditableClose: true
     }
 
-    handleInputChange(val) {
-        return val;
-    }
+    this.toggleContainerRef = React.createRef()
+    this.dropdownRef = React.createRef()
+    this.inputRef = React.createRef()
+    this.editInputRef = React.createRef()
+  }
 
-    onClickPlus = () => {
-      this.setState(currentState => ({
-        isInputOpen: !currentState.isInputOpen
-      }));
-    }
+  componentDidMount() {
+    window.addEventListener('mousedown', this.onClickOutsideHandler);
+  }
 
-    copy = () => {
-      navigator.clipboard.writeText(this.props.item.data)
-      this.onClickHandler()
-    }
+  componentWillUnmount() {
+    window.removeEventListener('mousedown', this.onClickOutsideHandler);
+  }
 
-    showEditInput = () => {
-      this.setState({isEditableClose: false})
-      this.onClickHandler()
+  onClickHandler = () => {
+    this.setState(currentState => ({
+      isDropdownOpen: !currentState.isDropdownOpen
+    }));
+  }
+
+  onClickOutsideHandler = event => {
+    if ((this.state.isDropdownOpen && !this.toggleContainerRef.current.contains(event.target))) {
+      this.setState({ isDropdownOpen: false });
     }
-  
-    render() {
-      return (
-        <>
-          <div className="contact" key={this.props.item.id}>
-            <div className="type">{this.props.item.type}:</div>
-            <div ref={this.toggleContainer}>
-              {
-                this.state.isEditableClose
-                  ? <>
-                      <img src={plus} onClick={this.onClickPlus}/>
-                      <span onClick={this.onClickHandler}>{this.props.item.data}</span>
-                    </>
-                  : <Input 
-                      handleChange={()=>{this.handleInputChange(this.state.data)}}  
-                      value={this.props.item.data}
-                      ref={this.editInputRef}
-                    />
-              }
-              {this.state.isDropdownOpen 
-                ? <Dropdown 
-                    copy={this.copy} 
-                    ref={this.dropdown}
-                    delete={this.props.actions.deleteItem}
-                    id={this.props.item.id} 
-                    type={this.props.item.type}
-                    data={this.props.item.data}
-                    edit={this.showEditInput}
-                  /> 
-                : null}
-            </div>
-          </div>
-          {
-            this.state.isInputOpen
-            ? <div className="contact">
-                <div className="type">{this.props.item.type}:</div>
-                <Input ref={this.input} />
-              </div>
-            : null
-          }
-        </>
-      );
+    // multiple pluses
+    if ((this.state.isInputOpen && event.target.tagName !== 'IMG' && this.inputRef.current !== event.target)) {
+      this.props.actions.addItem(this.props.item.id, this.props.item.type, this.props.item.data, this.inputRef.current.value)
+      this.setState({ isInputOpen: false });
+    }
+    if (!this.state.isEditableClose && this.editInputRef.current !== event.target) {
+      this.props.actions.editItem(this.props.item.id, this.props.item.type, this.props.item.data, this.editInputRef.current.value)
+      this.setState({isEditableClose: true})
     }
   }
 
-  export default Contact
+  handleInputChange(val) {
+      return val;
+  }
+
+  onClickPlus = () => {
+    this.setState(currentState => ({
+      isInputOpen: !currentState.isInputOpen
+    }));
+  }
+
+  copy = () => {
+    navigator.clipboard.writeText(this.props.item.data)
+    this.onClickHandler()
+  }
+
+  showEditInput = () => {
+    this.setState({isEditableClose: false}, this.onClickHandler())
+  }
+
+  render() {
+    const { item, actions } = this.props
+    return (
+      <>
+        <div className="contact" key={item.id}>
+          <div className="type">{item.type}:</div>
+          <div ref={this.toggleContainerRef}>
+            {this.state.isEditableClose
+              ? <>
+                  <img src={plus} onClick={this.onClickPlus}/>
+                  <span onClick={this.onClickHandler}>{item.data}</span>
+                </>
+              : <Input 
+                  handleChange={()=>{this.handleInputChange(this.state.data)}}  
+                  value={item.data}
+                  ref={this.editInputRef}
+                />
+            }
+            {this.state.isDropdownOpen && 
+                <Dropdown 
+                  copy={this.copy} 
+                  ref={this.dropdownRef}
+                  remove={actions.deleteItem}
+                  id={item.id} 
+                  type={item.type}
+                  data={item.data}
+                  edit={this.showEditInput}
+                />
+            }
+          </div>
+        </div>
+        {this.state.isInputOpen && 
+            <div className="contact">
+              <div className="type">{item.type}:</div>
+              <Input ref={this.inputRef} />
+            </div>
+        }
+      </>
+    );
+  }
+}
+
+export default Contact

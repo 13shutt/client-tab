@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './Dropdown.css'
 
-const Dropdown = (props) => (
-  <div className="dropdown-content">
-    <li onClick={props.copy}>Копировать</li>
-    <li onClick={props.edit}>Редактировать</li>
-    <li onClick={() => props.delete(props.id, props.type, props.data)}>Удалить</li>
-  </div>
-)
+class Dropdown extends Component {
+  render() {
+    const { copy, edit, remove, id, type, data } = this.props 
+    return (
+      <div className="dropdown-content">
+        <li onClick={copy}>Копировать</li>
+        <li onClick={edit}>Редактировать</li>
+        <li onClick={() => remove(id, type, data)}>Удалить</li>
+      </div>
+    )
+  }
+}
  
 export default Dropdown;
