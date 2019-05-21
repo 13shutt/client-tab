@@ -22,6 +22,7 @@ const StyledDiv =  styled.div`
 export const Input = React.forwardRef((props, ref) => (
   <StyledDiv>
     <input 
+      onBlur={props.blur}
       autoFocus 
       onChange={props.handleChange}
       type="text"

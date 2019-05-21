@@ -1,0 +1,27 @@
+.contact {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  height: 24px;
+}
+.contact .type {
+  width: 80px;
+}
+input {
+  height: 22px;
+}
+.contact img {
+  height: 17px;
+  width: 17px;
+  position: relative;
+  top: 3px;
+  right: 4px;
+}
+.contact span {
+  color: black !important;
+}
+.contact:hover {
+  color: #2196f3 !important;
+  cursor: pointer;
+  transition: all 0.1s ease !important;
+}

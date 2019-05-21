@@ -3,7 +3,7 @@ import ContentEditable from 'react-contenteditable'
 
 import user from 'assets/user.jpg'
 import { Wrapper, User, Channel } from 'components/TabClient'
-import Contact from 'view/Contact'
+import Contact from 'view/TabClient/Contact'
 
 class TabClient extends Component {
 
