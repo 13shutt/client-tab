@@ -15,6 +15,9 @@ export const Wrapper = styled.div`
       }
       p {
         text-align: justify;
+        color: #928a8a;
+        margin: 4px 0px;
+        padding: 2px 2px 2px 0px;
       }
     `
   }
@@ -37,6 +40,11 @@ export const Wrapper = styled.div`
     list && css`
       display: flex;
       flex-direction: column;
+      margin: 4px 0px;
+      * {
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
     `
   }
 

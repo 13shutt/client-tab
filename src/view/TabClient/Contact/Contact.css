@@ -3,9 +3,11 @@
   flex-direction: row;
   align-items: baseline;
   height: 24px;
+  margin: 4px 0px;
 }
 .contact .type {
   width: 80px;
+  color: #928a8a;
 }
 input {
   height: 22px;
@@ -16,6 +18,7 @@ input {
   position: relative;
   top: 3px;
   right: 4px;
+  
 }
 .contact span {
   color: black !important;

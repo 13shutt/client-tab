@@ -5,6 +5,7 @@ const StyledDiv =  styled.div`
   display: flex;
   flex-direction: row;
   background: white;
+  color: #928a8a;
   i {
     margin-right: 10px;
   }
