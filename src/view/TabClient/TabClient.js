@@ -6,10 +6,12 @@ import { Wrapper, User, Channel } from 'components/TabClient'
 import Contact from 'view/TabClient/Contact'
 
 class TabClient extends Component {
+  constructor(props) {
+    super(props)
+    this.textRef = React.createRef()
+  }
 
-  changeText = () => {
-    console.log('text edited')
-  };
+  changeText = () => this.props.actions.editAbout(this.textRef.current.lastHtml)
 
   render() { 
     const { actions, contacts, about } = this.props
@@ -38,12 +40,14 @@ class TabClient extends Component {
 
         <h3>Примечание:</h3>
         <ContentEditable
+          ref={this.textRef}
           innerRef={this.contentEditable}
           html={about} 
           disabled={false}      
-          onChange={this.changeText} 
-          tagName='p' 
+          onBlur={this.changeText} 
+          tagName='p'
         />
+
       </Wrapper>
     )
   }

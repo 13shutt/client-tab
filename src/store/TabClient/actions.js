@@ -1,4 +1,4 @@
-import { DELETE_ITEM, EDIT_ITEM, ADD_ITEM } from './constants'
+import { DELETE_ITEM, EDIT_ITEM, ADD_ITEM, EDIT_ABOUT } from './constants'
 
 const deleteItem = (id, type, value) => dispatch => {
   const data = {id: id, type: type, data: value}
@@ -17,4 +17,8 @@ const addItem = (id, type, data, newData) => dispatch => {
   dispatch({type: ADD_ITEM, payload: [element, newAdded]})
 }
 
-export { deleteItem, editItem, addItem }
+const editAbout = data => dispatch => {
+  dispatch({type: EDIT_ABOUT, payload: data})
+}
+
+export { deleteItem, editItem, addItem, editAbout }

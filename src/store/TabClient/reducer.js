@@ -1,4 +1,4 @@
-import { DELETE_ITEM, EDIT_ITEM, ADD_ITEM } from './constants'
+import { DELETE_ITEM, EDIT_ITEM, ADD_ITEM, EDIT_ABOUT } from './constants'
 
 const initialState = {
   contacts: [
@@ -55,6 +55,12 @@ function tabClientReducer(state = initialState, action) {
           ...state.contacts.slice(ind + 1, state.contacts.length)
         ],
         about: state.about 
+      }
+
+    case EDIT_ABOUT:
+      return {
+        contacts: state.contacts,
+        about: action.payload
       }
 
     default:
